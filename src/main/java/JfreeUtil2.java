@@ -25,7 +25,7 @@ public class JfreeUtil2 {
 
     private static final String tempImgPath = "D:\\tempJfree.jpeg";
     private static final String noDataMessage = "暂无数据";
-    private static final Integer width=500;
+    private static final Integer width=730;
     private static final Integer height = 300;
  
 
@@ -59,8 +59,8 @@ public class JfreeUtil2 {
 
 
 
-    public static ImageEntity createChart(String title, DefaultCategoryDataset data) {
-        boolean legend= data.getColumnCount()<2;
+    public static ImageEntity createBar(String title, DefaultCategoryDataset data) {
+        boolean legend= data.getColumnCount()>1;
         JFreeChart chart = ChartFactory.createBarChart(title, "", "", data, PlotOrientation.VERTICAL,
                 legend,false,false);
  
@@ -68,7 +68,7 @@ public class JfreeUtil2 {
         // 3:设置抗锯齿，防止字体显示不清楚
         ChartUtils.setAntiAlias(chart);// 抗锯齿
         // 4:对柱子进行渲染
-        ChartUtils.setBarRenderer(chart.getCategoryPlot(), false);//
+        ChartUtils.setBarRenderer(chart.getCategoryPlot(), true);//
         // 5:对其他部分进行渲染
         ChartUtils.setXAixs(chart.getCategoryPlot());// X坐标轴渲染
         ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
@@ -77,11 +77,34 @@ public class JfreeUtil2 {
 
             chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
         }
-       return covertEasyPoiImagViaTempFile(500,300,chart);
+       return covertEasyPoiImagViaTempFile(chart);
         
     }
 
-    public static ImageEntity covertEasyPoiImagViaTempFile(int width, int height, JFreeChart chart) {
+    public static ImageEntity createLine(String title, DefaultCategoryDataset data) {
+        boolean legend= data.getColumnCount()>1;
+        JFreeChart chart = ChartFactory.createLineChart(title, "", "", data, PlotOrientation.VERTICAL,
+                legend,false,false);
+
+
+        // 3:设置抗锯齿，防止字体显示不清楚
+        ChartUtils.setAntiAlias(chart);// 抗锯齿
+        // 4:对柱子进行渲染[[采用不同渲染]]
+        ChartUtils.setLineRender(chart.getCategoryPlot(), true, true);
+        // 5:对其他部分进行渲染
+        ChartUtils.setXAixs(chart.getCategoryPlot());// X坐标轴渲染
+        ChartUtils.setYAixs(chart.getCategoryPlot());// Y坐标轴渲染
+        
+        // 设置标注无边框
+        if (legend){
+
+            chart.getLegend().setFrame(new BlockBorder(Color.WHITE));
+        }
+       return covertEasyPoiImagViaTempFile(chart);
+        
+    }
+
+    public static ImageEntity covertEasyPoiImagViaTempFile(JFreeChart chart) {
         //设置抗锯齿
         chart.setTextAntiAlias(false);
         try {

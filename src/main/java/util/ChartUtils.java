@@ -3,10 +3,7 @@ package util;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.DateTickUnitType;
-import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.axis.*;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.*;
 import org.jfree.chart.plot.*;
@@ -47,6 +44,7 @@ import java.util.Vector;
 public class ChartUtils {
 	private static String NO_DATA_MSG = "数据加载失败";
 	private static Font FONT = new Font("宋体", Font.PLAIN, 12);
+	private static Font SMALL_FONT = new Font("宋体", Font.PLAIN, 8);
 	public static Color[] CHART_COLORS = {
 			new Color(31, 129, 188), new Color(92, 92, 97), new Color(144, 237, 125), new Color(255, 188, 117),
 			new Color(153, 158, 255), new Color(255, 117, 153), new Color(253, 236, 109), new Color(128, 133, 232),
@@ -71,7 +69,7 @@ public class ChartUtils {
 		chartTheme.setRegularFont(FONT);
 		// 设置轴向的字体
 		chartTheme.setLargeFont(FONT);
-		chartTheme.setSmallFont(FONT);
+		chartTheme.setSmallFont(SMALL_FONT);
 		chartTheme.setTitlePaint(new Color(51, 51, 51));
 		chartTheme.setSubtitlePaint(new Color(85, 85, 85));
 
@@ -323,8 +321,9 @@ public class ChartUtils {
 		BarRenderer renderer = (BarRenderer) plot.getRenderer();
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 		renderer.setMaximumBarWidth(0.075);// 设置柱子最大宽度
-		renderer.setBaseItemLabelsVisible(true);//显示数字
+	
 		if (isShowDataLabels) {
+			//显示柱子的值
 			renderer.setBaseItemLabelsVisible(true);
 		}
 
@@ -355,8 +354,13 @@ public class ChartUtils {
 	 */
 	public static void setXAixs(CategoryPlot plot) {
 		Color lineColor = new Color(31, 121, 170);
-		plot.getDomainAxis().setAxisLinePaint(lineColor);// X坐标轴颜色
-		plot.getDomainAxis().setTickMarkPaint(lineColor);// X坐标轴标记|竖线颜色
+		CategoryAxis axis = plot.getDomainAxis();
+	//	axis.setUpperMargin(0.01);//左右间距
+	//	axis.setLowerMargin(0.01);
+		axis.setAxisLinePaint(lineColor);// X坐标轴颜色
+		axis.setTickMarkPaint(lineColor);// X坐标轴标记|竖线颜色
+		plot.setDomainGridlinesVisible(true);//网格可见
+		
 
 	}
 

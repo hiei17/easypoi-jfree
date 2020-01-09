@@ -20,16 +20,19 @@ public class WordMonthReportExport {
         WordMonthReportData data=new WordMonthReportData();
         data.setCompanyFullName("项目公司全称");
 
-        ImageEntity barChart = JfreeUtil2.createChart("并网容量对比",createDataset());
-        
+        ImageEntity barChart = JfreeUtil2.createBar("并网容量对比", createBar());
         data.setSumPowerCompareBar(barChart);
+        
+        
+        data.setPowerIrradiationLine(JfreeUtil2.createLine("日发电量与辐照量对比",createLineDataset()));
+
         Map<String, Object> map = transBean2Map(data);
                 
         //word模板相对路径、word生成路径、word生成的文件名称、数据源
         WordUtil.exportWord("template/monthReport.docx", "D:/", "生成文件.docx", map);
     }
 
-    public static DefaultCategoryDataset createDataset() {
+    public static DefaultCategoryDataset createBar() {
         // 标注类别
         String[] categories = {"目标发电量", "实际并网容量"};
         Vector<Serie> series = new Vector<Serie>();
@@ -69,5 +72,35 @@ public class WordMonthReportExport {
         }
 
         return map;
+    }
+
+
+    public static DefaultCategoryDataset createLineDataset() {
+
+       
+        // 标注类别
+        String[] categories = new String[31];
+        for (int i = 0; i < categories.length; i++) {
+            categories[i]=i+1+"";
+            
+        }
+        Vector<Serie> series = new Vector<>();
+        Double[] a=   new Double[31];
+        for (int i = 0; i < a.length; i++) {
+            a[i]=Math.random();
+            
+        }
+        Double[] b=   new Double[31];
+        for (int i = 0; i < a.length; i++) {
+            b[i]=Math.random();
+            
+        }
+        // 柱子名称：柱子所有的值集合
+        series.add(new Serie("日发电量(万kwh)", a));
+        series.add(new Serie("日辐照量(MJ/m²)", b));
+      
+       
+        DefaultCategoryDataset dataset = ChartUtils.createDefaultCategoryDataset(series, categories);
+        return dataset;
     }
 }

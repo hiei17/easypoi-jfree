@@ -34,4 +34,9 @@ public class WordMonthReportData {
      * 并网容量对比 柱状图
      */
     ImageEntity sumPowerCompareBar;
+
+    /**
+     * 日发电量与辐照量对比 折线图
+     */
+    ImageEntity powerIrradiationLine;
 }
