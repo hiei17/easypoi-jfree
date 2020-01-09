@@ -1,5 +1,3 @@
-import cn.afterturn.easypoi.entity.ImageEntity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,8 +14,8 @@ public class WordDemo1 {
         datas.put("一号", 10);
         datas.put("二号", 20);
         datas.put("三号", 40);
-        ImageEntity imageEntity = JfreeUtil.pieChart("测试", datas, 500, 300);
-        map.put("picture", imageEntity);
+      //  ImageEntity imageEntity = JfreeUtil.pieChart("测试", datas);
+      //  map.put("picture", imageEntity);
 
         //模拟其它普通数据
         map.put("username", "张三");
